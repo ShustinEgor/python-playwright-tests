@@ -2,3 +2,5 @@
 __pycache__/
 *.рус
 .pytest_cache/
+.env
+.idea/

@@ -1,12 +1,17 @@
-import pytest
+import pytest         
+from src.api.http_client import api_post  
+import logging
 
-BASE_URL = "https://dummyjson.com"
+logger = logging.getLogger(__name__)
 
+@pytest.fixture(autouse=True)
+def start_end_logger(request):
+    logger.info(f"Запуск теста: {request.node.name}")
+    yield
+    logger.info(f"Конец теста: {request.node.name}")
 
 @pytest.fixture(scope="session")
-def api_context(playwright):
-    context = playwright.request.new_context(base_url=BASE_URL)
-    yield context
-    context.dispose()
-
-
+def auth_token():
+    payload = {"username": "emilys", "password": "emilyspass"}
+    response = api_post("/auth/login", json=payload)
+    yield response.json()["accessToken"]
