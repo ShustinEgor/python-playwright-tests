@@ -1,6 +1,6 @@
 .venv/
 __pycache__/
-*.рус
+*.pyc
 .pytest_cache/
 .env
 .idea/
